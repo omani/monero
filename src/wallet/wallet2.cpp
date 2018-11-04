@@ -2186,7 +2186,9 @@ void wallet2::process_parsed_blocks(uint64_t start_height, const std::vector<cry
 void wallet2::refresh(bool trusted_daemon)
 {
   uint64_t blocks_fetched = 0;
-  refresh(trusted_daemon, 0, blocks_fetched);
+  boost::thread([&]() {
+    this->refresh(trusted_daemon, 0, blocks_fetched);
+  });
 }
 //----------------------------------------------------------------------------------------------------
 void wallet2::refresh(bool trusted_daemon, uint64_t start_height, uint64_t & blocks_fetched)
